@@ -1,6 +1,6 @@
 #include <windows.h>
 #include <winuser.h>
-//#include "OpenGL_Wrap.cpp"
+#include "OpenGL_Wrap.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
@@ -37,7 +37,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	ShowWindow(hwnd, nShowCmd);
 
-	//OpenGLW::InitializeOpenGLContext(hwnd);
+	OpenGLW::InitializeOpenGLContext(hwnd);
 
 	MSG msg = { };
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
