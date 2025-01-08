@@ -1,8 +1,12 @@
 #include <windows.h>
-#include <winuser.h>
 #include "OpenGL_Wrap.h"
 
-LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK DummyWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
+{
+	return DefWindowProcA(hwnd, uMsg, wParam, lParam);
+}
+
+LRESULT CALLBACK FinalWindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 {
 	switch (uMsg)
 	{
@@ -19,14 +23,14 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	WNDCLASS wc = { }; 
 
-	wc.lpfnWndProc = WindowProc;
+	wc.lpfnWndProc = FinalWindowProc;
 	wc.hInstance = hInstance;
 	wc.lpszClassName = CLASS_NAME;
-	wc.style = CS_OWNDC; //this little shit removes the X and all of th usual buttons in a window 
+	wc.style = CS_OWNDC;
 
 	RegisterClass(&wc);
 
-	HWND hwnd = CreateWindowExA(0, CLASS_NAME,"Transform Matrix", wc.style,
+	HWND hwnd = CreateWindowExA(0, CLASS_NAME,"Transform Matrix", WS_OVERLAPPEDWINDOW,
 							 CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT, CW_USEDEFAULT,
 							 NULL, NULL, hInstance, NULL);
 
@@ -37,7 +41,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	ShowWindow(hwnd, nShowCmd);
 
-	OpenGLW::InitializeOpenGLContext(hwnd);
+	//OpenGLW::InitializeOpenGLContext(hwnd);
 
 	MSG msg = { };
 	while (GetMessage(&msg, NULL, 0, 0) > 0)
