@@ -3,6 +3,7 @@
 
 namespace OpenGLW
 {
-	void InitializeOpenGLContext(HWND hwnd);
-
+	void InitializeContext(HWND hwnd);
+	void InitializeDummy(HWND hwnd, HDC hDC);
+	bool LoadFunctions();
 }
